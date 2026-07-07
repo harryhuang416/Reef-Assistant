@@ -183,12 +183,130 @@ font-weight:900;
 @media (min-width: 700px){
 .app{max-width:520px}
 }
+
+#login-screen{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:24px;
+background:linear-gradient(135deg,#dff4ff,#f6fcff);
+}
+.login-card{
+width:100%;
+max-width:430px;
+background:white;
+border-radius:24px;
+padding:24px;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+.login-title{
+font-size:30px;
+font-weight:900;
+text-align:center;
+color:#0077b6;
+margin-bottom:8px;
+}
+.login-subtitle{
+text-align:center;
+color:#607080;
+font-size:14px;
+line-height:1.6;
+margin-bottom:22px;
+}
+.login-field{
+margin-bottom:14px;
+}
+.login-field label{
+display:block;
+font-size:13px;
+font-weight:800;
+color:#607080;
+margin-bottom:6px;
+}
+.login-field input{
+width:100%;
+padding:13px;
+border:1px solid #cbe3f0;
+border-radius:14px;
+font-size:15px;
+}
+.login-btn{
+width:100%;
+padding:14px;
+border:none;
+border-radius:16px;
+background:linear-gradient(135deg,#00b4d8,#0096c7);
+color:white;
+font-size:16px;
+font-weight:900;
+cursor:pointer;
+margin-top:8px;
+}
+.login-secondary{
+width:100%;
+padding:12px;
+border:none;
+background:transparent;
+color:#0077b6;
+font-size:14px;
+font-weight:800;
+cursor:pointer;
+}
+.login-warning{
+margin-top:14px;
+font-size:12px;
+line-height:1.6;
+color:#8a6d3b;
+background:#fff8e1;
+padding:10px;
+border-radius:12px;
+}
+.logout-btn{
+position:absolute;
+right:14px;
+top:calc(18px + env(safe-area-inset-top));
+border:none;
+background:#eef8ff;
+color:#0077b6;
+border-radius:999px;
+padding:8px 10px;
+font-size:12px;
+font-weight:800;
+cursor:pointer;
+}
+
 </style>
 </head>
 
 <body>
-<div class="app">
-<div class="header" id="header-title">ReefAI</div>
+
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-title">ReefAI</div>
+    <div class="login-subtitle">海水缸管理助手<br>請先登入後使用</div>
+
+    <div class="login-field">
+      <label>帳號</label>
+      <input type="text" id="login-username" placeholder="請輸入帳號">
+    </div>
+
+    <div class="login-field">
+      <label>密碼</label>
+      <input type="password" id="login-password" placeholder="請輸入密碼">
+    </div>
+
+    <button class="login-btn" onclick="login()">登入</button>
+    <button class="login-secondary" onclick="registerAccount()">第一次使用，建立帳號</button>
+
+    <div class="login-warning">
+      測試版帳密目前只儲存在使用者自己的瀏覽器內，適合朋友試用原型，不適合正式商業版或真正保護資料。
+    </div>
+  </div>
+</div>
+
+<div class="app" id="main-app" style="display:none;">
+<div class="header" id="header-title">ReefAI<button class="logout-btn" onclick="logout()">登出</button></div>
 
 <!-- HOME -->
 <div class="page active" id="page-home">
@@ -324,6 +442,67 @@ font-weight:900;
 </div>
 
 <script>
+
+function checkLogin(){
+const user=localStorage.getItem('reefai-current-user')
+if(user){
+document.getElementById('login-screen').style.display='none'
+document.getElementById('main-app').style.display='block'
+}else{
+document.getElementById('login-screen').style.display='flex'
+document.getElementById('main-app').style.display='none'
+}
+}
+
+function registerAccount(){
+const username=document.getElementById('login-username').value.trim()
+const password=document.getElementById('login-password').value.trim()
+
+if(!username || !password){
+alert('請輸入帳號與密碼')
+return
+}
+
+const key='reefai-user-'+username
+
+if(localStorage.getItem(key)){
+alert('此帳號已存在，請直接登入')
+return
+}
+
+localStorage.setItem(key,JSON.stringify({username:username,password:password}))
+localStorage.setItem('reefai-current-user',username)
+alert('帳號建立成功')
+checkLogin()
+}
+
+function login(){
+const username=document.getElementById('login-username').value.trim()
+const password=document.getElementById('login-password').value.trim()
+
+const raw=localStorage.getItem('reefai-user-'+username)
+
+if(!raw){
+alert('查無此帳號，請先建立帳號')
+return
+}
+
+const user=JSON.parse(raw)
+
+if(user.password!==password){
+alert('密碼錯誤')
+return
+}
+
+localStorage.setItem('reefai-current-user',username)
+checkLogin()
+}
+
+function logout(){
+localStorage.removeItem('reefai-current-user')
+checkLogin()
+}
+
 function $(id){return document.getElementById(id)}
 function todayString(){
 const d=new Date()
@@ -476,6 +655,7 @@ return `<div class="consumption-box"><h4>${label}</h4>
 ${advice}
 </div>`
 }
+checkLogin()
 loadSettings()
 loadDosing()
 updateAmino()
