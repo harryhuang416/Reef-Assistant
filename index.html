@@ -3,392 +3,120 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>ReefAI v4.4 Mobile UI</title>
-
+<title>ReefAI v5.0</title>
 <style>
 *{box-sizing:border-box}
-html,body{width:100%;overflow-x:hidden}
-body{
-margin:0;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft JhengHei",Arial,sans-serif;
-background:#eef7fb;
-color:#163047;
-font-size:16px;
-}
-#login-screen{
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:20px;
-background:linear-gradient(135deg,#dff4ff,#f6fcff);
-}
-.login-card{
-width:100%;
-max-width:420px;
-background:white;
-border-radius:22px;
-padding:22px;
-box-shadow:0 10px 28px rgba(0,0,0,.08);
-}
-.login-title{
-font-size:30px;
-font-weight:900;
-text-align:center;
-color:#0077b6;
-margin-bottom:8px;
-}
-.login-subtitle{
-text-align:center;
-color:#607080;
-font-size:14px;
-line-height:1.6;
-margin-bottom:20px;
-}
-.login-field{margin-bottom:14px}
-.login-field label{
-display:block;
-font-size:13px;
-font-weight:800;
-color:#607080;
-margin-bottom:6px;
-}
-.login-field input{
-width:100%;
-padding:13px;
-border:1px solid #cbe3f0;
-border-radius:14px;
-font-size:16px;
-}
-.login-btn{
-width:100%;
-padding:14px;
-border:none;
-border-radius:16px;
-background:linear-gradient(135deg,#00b4d8,#0096c7);
-color:white;
-font-size:16px;
-font-weight:900;
-cursor:pointer;
-margin-top:8px;
-}
-.login-secondary{
-width:100%;
-padding:12px;
-border:none;
-background:transparent;
-color:#0077b6;
-font-size:14px;
-font-weight:800;
-cursor:pointer;
-}
-.login-warning{
-margin-top:14px;
-font-size:12px;
-line-height:1.6;
-color:#8a6d3b;
-background:#fff8e1;
-padding:10px;
-border-radius:12px;
-}
-.app{
-width:100%;
-max-width:430px;
-margin:auto;
-min-height:100vh;
-background:#f6fcff;
-box-shadow:0 0 24px rgba(0,0,0,.06);
-display:none;
-overflow:hidden;
-}
-.header{
-padding:calc(10px + env(safe-area-inset-top)) 52px 12px;
-font-size:22px;
-font-weight:900;
-text-align:center;
-background:white;
-position:sticky;
-top:0;
-z-index:10;
-border-bottom:1px solid #dcecf5;
-min-height:56px;
-display:flex;
-align-items:center;
-justify-content:center;
-}
-.logout-btn{
-position:absolute;
-right:12px;
-top:calc(10px + env(safe-area-inset-top));
-border:none;
-background:#eef8ff;
-color:#0077b6;
-border-radius:999px;
-padding:7px 9px;
-font-size:12px;
-font-weight:800;
-cursor:pointer;
-}
-.page{
-display:none;
-padding:14px;
-padding-bottom:calc(90px + env(safe-area-inset-bottom));
-}
+html,body{margin:0;width:100%;overflow-x:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft JhengHei",Arial,sans-serif;background:#eef7fb;color:#163047;font-size:16px}
+:root{--blue:#00a6c8;--deep:#0077b6;--bg:#f6fcff;--card:#fff;--soft:#f0f9fd;--line:#dcecf5;--text:#163047;--sub:#607080;--danger:#d62828;--ok:#138a5c}
+#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px;background:linear-gradient(135deg,#dff4ff,#f6fcff)}
+.login-card{width:100%;max-width:420px;background:white;border-radius:24px;padding:24px;box-shadow:0 10px 28px rgba(0,0,0,.08)}
+.login-title{text-align:center;font-size:32px;font-weight:900;color:var(--deep);margin-bottom:8px}
+.login-subtitle{text-align:center;color:var(--sub);font-size:14px;line-height:1.6;margin-bottom:22px}
+.login-field{margin-bottom:14px}.login-field label{display:block;font-size:13px;font-weight:800;color:var(--sub);margin-bottom:6px}
+.login-field input{width:100%;padding:13px;border:1px solid #cbe3f0;border-radius:14px;font-size:16px}
+.login-btn{width:100%;padding:14px;border:none;border-radius:16px;background:linear-gradient(135deg,#00b4d8,#0096c7);color:white;font-size:16px;font-weight:900;cursor:pointer;margin-top:8px}
+.login-secondary{width:100%;padding:12px;border:none;background:transparent;color:var(--deep);font-size:14px;font-weight:800;cursor:pointer}
+.login-warning{margin-top:14px;font-size:12px;line-height:1.6;color:#8a6d3b;background:#fff8e1;padding:10px;border-radius:12px}
+.app{width:100%;max-width:430px;margin:auto;min-height:100vh;background:var(--bg);box-shadow:0 0 24px rgba(0,0,0,.06);display:none;overflow:hidden}
+.header{padding:calc(10px + env(safe-area-inset-top)) 52px 12px;font-size:22px;font-weight:900;text-align:center;background:white;position:sticky;top:0;z-index:10;border-bottom:1px solid var(--line);min-height:56px;display:flex;align-items:center;justify-content:center}
+.logout-btn{position:absolute;right:12px;top:calc(10px + env(safe-area-inset-top));border:none;background:#eef8ff;color:var(--deep);border-radius:999px;padding:7px 9px;font-size:12px;font-weight:800;cursor:pointer}
+.page{display:none;padding:14px;padding-bottom:calc(94px + env(safe-area-inset-bottom))}
 .page.active{display:block}
-.card{
-background:white;
-border-radius:18px;
-padding:16px;
-margin-bottom:14px;
-box-shadow:0 5px 16px rgba(0,0,0,.055);
-width:100%;
-overflow:hidden;
-}
-.section-title{
-font-size:18px;
-font-weight:900;
-margin-bottom:12px;
-line-height:1.3;
-}
-.score{
-font-size:46px;
-font-weight:900;
-text-align:center;
-color:#0077b6;
-line-height:1.1;
-}
-.input-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-}
-.input-box{
-background:#f0f9fd;
-padding:11px;
-border-radius:14px;
-min-width:0;
-}
-.input-box label{
-font-size:13px;
-color:#607080;
-display:block;
-margin-bottom:6px;
-font-weight:800;
-line-height:1.35;
-}
-input,textarea,select{
-width:100%;
-max-width:100%;
-padding:11px;
-border:1px solid #cbe3f0;
-border-radius:12px;
-font-size:16px;
-background:#fff;
-color:#163047;
-}
-textarea{resize:vertical}
-.full{grid-column:1/-1}
-.btn{
-width:100%;
-padding:14px;
-border:none;
-border-radius:16px;
-background:linear-gradient(135deg,#00b4d8,#0096c7);
-color:white;
-font-size:16px;
-font-weight:900;
-margin-top:14px;
-cursor:pointer;
-}
-.task{
-padding:12px 0;
-border-bottom:1px solid #edf4f7;
+.card{background:var(--card);border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 5px 16px rgba(0,0,0,.055);width:100%;overflow:hidden}
+.section-title{font-size:18px;font-weight:900;margin-bottom:12px;line-height:1.3}
+.section-sub{font-size:13px;color:var(--sub);line-height:1.6;margin-top:-6px;margin-bottom:12px}
+.score{font-size:46px;font-weight:900;text-align:center;color:var(--deep);line-height:1.1}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field{background:var(--soft);padding:11px;border-radius:14px;min-width:0}
+.field label{font-size:13px;color:var(--sub);display:block;margin-bottom:6px;font-weight:800;line-height:1.35}
+input,textarea,select{width:100%;max-width:100%;padding:11px;border:1px solid #cbe3f0;border-radius:12px;font-size:16px;background:#fff;color:var(--text)}
+textarea{resize:vertical}.full{grid-column:1/-1}
+.btn{width:100%;padding:14px;border:none;border-radius:16px;background:linear-gradient(135deg,#00b4d8,#0096c7);color:white;font-size:16px;font-weight:900;margin-top:14px;cursor:pointer}
+.btn-secondary{width:100%;padding:13px;border:1px solid #cbe3f0;border-radius:16px;background:#fff;color:var(--deep);font-size:15px;font-weight:900;margin-top:10px;cursor:pointer}
+.task{padding:12px 0;border-bottom:1px solid #edf4f7;display:flex;align-items:flex-start;gap:12px;width:100%;min-width:0}
+.task:last-child{border-bottom:none}.task input{width:24px;height:24px;min-width:24px;flex:0 0 auto;margin-top:1px}
+.task-main{flex:1;min-width:0;white-space:normal;word-break:break-word;line-height:1.45;font-size:16px;font-weight:800}
+.task-sub{font-size:13px;color:var(--sub);font-weight:400;margin-top:3px}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:900;background:#eef8ff;color:var(--deep);margin-top:6px}
+.badge.due{background:#fff3cd;color:#856404}.badge.over{background:#ffe3e3;color:var(--danger)}
+.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-top:12px;width:100%}
+.calendar button{border:none;border-radius:10px;padding:10px 0;background:#eef8ff;cursor:pointer;font-size:14px;min-width:0}
+.calendar button.has{background:#b8ecff;font-weight:900}.calendar button.selected{background:var(--blue);color:white;font-weight:900}
+.detail{padding:10px 0;border-bottom:1px solid #edf4f7;display:flex;justify-content:space-between;gap:12px;font-size:15px;line-height:1.4}
+.detail:last-child{border-bottom:none}.detail span{color:var(--sub);flex:0 0 auto}.detail b{text-align:right;word-break:break-word}
+.note{margin-top:10px;font-size:13px;line-height:1.6;color:var(--sub)}
+.consumption-box{background:var(--soft);border-radius:16px;padding:14px;margin-bottom:12px;line-height:1.7;font-size:14px;word-break:break-word}
+.consumption-box h4{margin:0 0 8px;font-size:16px}
+.tabs{display:flex;background:#eef8ff;border-radius:16px;padding:4px;margin-bottom:14px;gap:4px}
+.tab{flex:1;border:none;background:transparent;border-radius:12px;padding:10px 6px;font-weight:900;color:var(--sub);cursor:pointer}
+.tab.active{background:white;color:var(--deep);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:calc(64px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:rgba(255,255,255,.96);backdrop-filter:blur(12px);display:flex;border-top:1px solid var(--line);z-index:20}
+.nav-btn{flex:1;display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;min-width:0}.nav-active{color:var(--blue);font-weight:900}
+.hidden{display:none!important}
+@media (max-width:360px){.grid{grid-template-columns:1fr}.score{font-size:40px}.header{font-size:20px}.nav-btn{font-size:13px}}
+
+.chart-tabs {
 display:flex;
-align-items:center;
-gap:12px;
-width:100%;
-min-width:0;
-}
-.task:last-child{border-bottom:none}
-.task input{
-width:24px;
-height:24px;
-min-width:24px;
-flex:0 0 auto;
-}
-.task div{
-flex:1;
-min-width:0;
-white-space:normal;
-word-break:break-word;
-line-height:1.45;
-font-size:16px;
-}
-.calendar{
-display:grid;
-grid-template-columns:repeat(7,minmax(0,1fr));
 gap:6px;
-margin-top:12px;
-width:100%;
+background:#eef8ff;
+border-radius:14px;
+padding:4px;
+margin-bottom:12px;
 }
-.calendar button{
+.chart-btn {
+flex:1;
 border:none;
 border-radius:10px;
-padding:10px 0;
-background:#eef8ff;
+padding:9px 4px;
+background:transparent;
+font-weight:900;
+color:var(--sub);
 cursor:pointer;
-font-size:14px;
-min-width:0;
 }
-.calendar button.has{
-background:#b8ecff;
-font-weight:900;
+.chart-btn.active {
+background:white;
+color:var(--deep);
+box-shadow:0 2px 8px rgba(0,0,0,.06);
 }
-.calendar button.selected{
-background:#00b4d8;
-color:white;
-font-weight:900;
-}
-.detail{
-padding:10px 0;
-border-bottom:1px solid #edf4f7;
-display:flex;
-justify-content:space-between;
-gap:12px;
-font-size:15px;
-line-height:1.4;
-}
-.detail:last-child{border-bottom:none}
-.detail span{
-color:#607080;
-flex:0 0 auto;
-}
-.detail b{
-text-align:right;
-word-break:break-word;
-}
-.note{
-margin-top:10px;
-font-size:13px;
-line-height:1.6;
-color:#607080;
-}
-.consumption-box{
+.chart-wrap {
 background:#f0f9fd;
 border-radius:16px;
-padding:14px;
-margin-bottom:12px;
-line-height:1.7;
-font-size:14px;
-word-break:break-word;
+padding:12px;
+overflow:hidden;
 }
-.consumption-box h4{margin:0 0 8px;font-size:16px}
-.bottom-nav{
-position:fixed;
-bottom:0;
-left:50%;
-transform:translateX(-50%);
+.chart-svg {
 width:100%;
-max-width:430px;
-height:calc(64px + env(safe-area-inset-bottom));
-padding-bottom:env(safe-area-inset-bottom);
-background:rgba(255,255,255,.96);
-backdrop-filter:blur(12px);
-display:flex;
-border-top:1px solid #dcecf5;
-z-index:20;
+height:220px;
+display:block;
 }
-.nav-btn{
-flex:1;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:15px;
-cursor:pointer;
-min-width:0;
+.chart-empty {
+font-size:14px;
+color:var(--sub);
+line-height:1.7;
+padding:14px;
 }
-.nav-active{
-color:#00a6c8;
-font-weight:900;
+.chart-legend {
+font-size:13px;
+color:var(--sub);
+margin-top:8px;
+line-height:1.6;
 }
-@media (max-width:360px){
-.input-grid{grid-template-columns:1fr}
-.score{font-size:40px}
-.header{font-size:20px}
-.nav-btn{font-size:14px}
-}
+
 </style>
 </head>
-
 <body>
-
-<div id="login-screen">
-<div class="login-card">
-<div class="login-title">ReefAI</div>
-<div class="login-subtitle">海水缸管理助手<br>請先登入後使用</div>
-
-<div class="login-field">
-<label>帳號</label>
-<input type="text" id="login-username" autocomplete="username" placeholder="請輸入帳號">
-</div>
-
-<div class="login-field">
-<label>密碼</label>
-<input type="password" id="login-password" autocomplete="current-password" placeholder="請輸入密碼">
-</div>
-
-<button type="button" class="login-btn" id="login-btn">登入</button>
-<button type="button" class="login-secondary" id="register-btn">第一次使用，建立帳號</button>
-
-<div class="login-warning">
-測試版帳密只存在使用者自己的瀏覽器，適合朋友試用原型；正式會員系統之後要改接 Firebase / Supabase。
-</div>
-</div>
-</div>
-
+<div id="login-screen"><div class="login-card"><div class="login-title">ReefAI</div><div class="login-subtitle">海水缸管理助手<br>請先登入後使用</div><div class="login-field"><label>帳號</label><input type="text" id="login-username"></div><div class="login-field"><label>密碼</label><input type="password" id="login-password"></div><button type="button" class="login-btn" id="login-btn">登入</button><button type="button" class="login-secondary" id="register-btn">第一次使用，建立帳號</button><div class="login-warning">測試版帳密只存在使用者自己的瀏覽器。正式版之後要接 Firebase / Supabase。</div></div></div>
 <div class="app" id="main-app">
 <div class="header" id="header-title">ReefAI<button class="logout-btn" id="logout-btn">登出</button></div>
 
 <div class="page active" id="page-home">
-<div class="card">
-<div class="section-title">Stability Score</div>
-<div class="score" id="score">92</div>
-<div class="note">依目前資料估算，未輸入水質時顯示 0，但不列為異常。</div>
-</div>
-
-<div class="card">
-<div class="section-title">今日異常</div>
-<div id="alerts">目前無異常。</div>
-</div>
-
-<div class="card">
-<div class="section-title">今日任務</div>
-<div id="todayTasks">
-<div class="task"><input type="checkbox"><div>清洗蛋白杯</div></div>
-<div class="task"><input type="checkbox"><div>更換濾棉</div></div>
-</div>
-</div>
-
-<div class="card">
-<div class="section-title">今日活動</div>
-<div class="input-grid">
-<div class="input-box"><label>KH</label><input type="number" id="kh" step="0.1" placeholder="0"></div>
-<div class="input-box"><label>Ca</label><input type="number" id="ca" step="1" placeholder="0"></div>
-<div class="input-box"><label>Mg</label><input type="number" id="mg" step="1" placeholder="0"></div>
-<div class="input-box"><label>NO3</label><input type="number" id="no3" step="0.1" placeholder="0"></div>
-<div class="input-box"><label>PO4</label><input type="number" id="po4" step="0.01" placeholder="0"></div>
-<div class="input-box"><label>pH</label><input type="number" id="ph" step="0.1" placeholder="0"></div>
-<div class="input-box"><label>NO2</label><input type="number" id="no2" step="0.01" placeholder="0"></div>
-<div class="input-box"><label>Temp</label><input type="number" id="temp" step="0.1" placeholder="0"></div>
-<div class="input-box full"><label>是否換水：_____ 公升</label><input type="number" id="waterchange" step="1" placeholder="未換水請填 0 或留空"></div>
-<div class="input-box"><label>KH 添加 ml</label><input type="number" id="dosekh" step="0.1" placeholder="0"></div>
-<div class="input-box"><label>Ca 添加 ml</label><input type="number" id="doseca" step="0.1" placeholder="0"></div>
-<div class="input-box"><label>Mg 添加 ml</label><input type="number" id="dosemg" step="0.1" placeholder="0"></div>
-<div class="input-box"><label>胺基酸 ml</label><input type="number" id="doseamino" step="0.1" placeholder="0"></div>
-<div class="input-box full"><label>備註</label><textarea id="note" rows="3" placeholder="例如：SPS 顏色偏淡、新增生物、爆藻、停電等"></textarea></div>
-</div>
-<button class="btn" id="save-today-btn">儲存今日活動</button>
-</div>
+<div class="card"><div class="section-title">Stability Score</div><div class="score" id="score">92</div><div class="note" id="score-note">依目前資料估算，未輸入水質時顯示 0，但不列為異常。</div></div>
+<div class="card"><div class="section-title">今日異常</div><div id="alerts">目前無異常。</div></div>
+<div class="card"><div class="section-title">今日任務</div><div id="todayTasks">尚無今日任務。</div></div>
+<div class="card"><div class="section-title">今日快速輸入</div><div class="grid">
+<div class="field"><label>KH</label><input type="number" id="kh" step="0.1" placeholder="0"></div><div class="field"><label>Ca</label><input type="number" id="ca" step="1" placeholder="0"></div><div class="field"><label>Mg</label><input type="number" id="mg" step="1" placeholder="0"></div><div class="field"><label>NO3</label><input type="number" id="no3" step="0.1" placeholder="0"></div><div class="field"><label>PO4</label><input type="number" id="po4" step="0.01" placeholder="0"></div><div class="field"><label>pH</label><input type="number" id="ph" step="0.1" placeholder="0"></div><div class="field"><label>NO2</label><input type="number" id="no2" step="0.01" placeholder="0"></div><div class="field"><label>Temp</label><input type="number" id="temp" step="0.1" placeholder="0"></div><div class="field full"><label>是否換水：_____ 公升</label><input type="number" id="waterchange" step="1" placeholder="未換水請填 0 或留空"></div><div class="field"><label>KH 添加 ml</label><input type="number" id="dosekh" step="0.1" placeholder="0"></div><div class="field"><label>Ca 添加 ml</label><input type="number" id="doseca" step="0.1" placeholder="0"></div><div class="field"><label>Mg 添加 ml</label><input type="number" id="dosemg" step="0.1" placeholder="0"></div><div class="field"><label>胺基酸 ml</label><input type="number" id="doseamino" step="0.1" placeholder="0"></div><div class="field full"><label>備註</label><textarea id="note" rows="3"></textarea></div>
+</div><button class="btn" id="save-today-btn">儲存今日活動</button></div>
 </div>
 
 <div class="page" id="page-water">
@@ -397,273 +125,198 @@ font-weight:900;
 <input type="month" id="monthPicker">
 <div class="calendar" id="calendar"></div>
 </div>
+
+<div class="card">
+<div class="section-title">水質圖表</div>
+<div class="section-sub">先以最近 14 筆紀錄繪製趨勢圖。未來可再切換 7日 / 30日 / 自訂區間。</div>
+<div class="chart-tabs">
+<button class="chart-btn active" data-chart="kh">KH</button>
+<button class="chart-btn" data-chart="ca">Ca</button>
+<button class="chart-btn" data-chart="mg">Mg</button>
+<button class="chart-btn" data-chart="nutrient">NO3/PO4</button>
+</div>
+<div class="chart-wrap" id="chartWrap">
+<div class="chart-empty">至少需要兩筆水質紀錄才會產生圖表。</div>
+</div>
+<div class="chart-legend" id="chartLegend"></div>
+</div>
+
 <div class="card">
 <div class="section-title">當日資料</div>
 <div id="dayDetail">請點選日期。</div>
 </div>
+
 <div class="card">
 <div class="section-title">消耗估算</div>
 <div id="consumption">至少需要兩筆 KH / Ca / Mg 紀錄。</div>
 </div>
 </div>
 
-<div class="page" id="page-dosing">
-<div class="card">
-<div class="section-title">KH 溶液</div>
-<div class="input-grid">
-<div class="input-box"><label>每日添加 ml</label><input type="number" id="khDaily" value="12" step="0.1"></div>
-<div class="input-box"><label>每 1ml / 100L 提升 dKH</label><input type="number" id="khPower" value="0.02" step="0.001"></div>
+<div class="page" id="page-dosing"><div class="card"><div class="section-title">添加系統</div><div class="section-sub">自配溶液或現成商品皆可使用。</div></div>
+<div class="card"><div class="section-title">KH 溶液</div><div class="grid"><div class="field"><label>每日添加 ml</label><input type="number" id="khDaily" value="12" step="0.1"></div><div class="field"><label>每 1ml / 100L 提升 dKH</label><input type="number" id="khPower" value="0.02" step="0.001"></div></div><div class="note">建議模板：一公升泡 60g，100L 水 1ml 上升 0.02 dKH。</div></div>
+<div class="card"><div class="section-title">Ca 溶液</div><div class="grid"><div class="field"><label>每日添加 ml</label><input type="number" id="caDaily" value="0" step="0.1"></div><div class="field"><label>每 1ml / 100L 提升 ppm</label><input type="number" id="caPower" value="1" step="0.001"></div></div><div class="note">建議模板：一公升泡 368g，100L 水 1ml 上升 1 ppm。</div></div>
+<div class="card"><div class="section-title">Mg 溶液</div><div class="grid"><div class="field"><label>每日添加 ml</label><input type="number" id="mgDaily" value="0" step="0.1"></div><div class="field"><label>每 1ml / 100L 提升 ppm</label><input type="number" id="mgPower" value="0.5" step="0.001"></div></div><div class="note">建議模板：一公升泡 425g，100L 水 1ml 上升 0.5 ppm。</div></div>
+<div class="card"><div class="section-title">標準劑量產品</div><div class="grid"><div class="field"><label>產品名稱</label><input id="customProductName" value="胺基酸"></div><div class="field"><label>每 100L 建議 ml</label><input type="number" id="aminoPer100" value="5" step="0.1"></div><div class="field full"><label>依總水量建議 ml</label><input type="number" id="aminoSuggest" value="0" readonly></div></div></div>
 </div>
-<div class="note">建議模板：一公升泡 60g，100L 水 1ml 上升 0.02 dKH。可自行修改。</div>
-</div>
-<div class="card">
-<div class="section-title">Ca 溶液</div>
-<div class="input-grid">
-<div class="input-box"><label>每日添加 ml</label><input type="number" id="caDaily" value="0" step="0.1"></div>
-<div class="input-box"><label>每 1ml / 100L 提升 ppm</label><input type="number" id="caPower" value="1" step="0.001"></div>
-</div>
-<div class="note">建議模板：一公升泡 368g，100L 水 1ml 上升 1 ppm。可自行修改。</div>
-</div>
-<div class="card">
-<div class="section-title">Mg 溶液</div>
-<div class="input-grid">
-<div class="input-box"><label>每日添加 ml</label><input type="number" id="mgDaily" value="0" step="0.1"></div>
-<div class="input-box"><label>每 1ml / 100L 提升 ppm</label><input type="number" id="mgPower" value="0.5" step="0.001"></div>
-</div>
-<div class="note">建議模板：一公升泡 425g，100L 水 1ml 上升 0.5 ppm。可自行修改。</div>
-</div>
-<div class="card">
-<div class="section-title">標準劑量產品，例如胺基酸</div>
-<div class="input-grid">
-<div class="input-box"><label>每 100L 建議 ml</label><input type="number" id="aminoPer100" value="5" step="0.1"></div>
-<div class="input-box"><label>依總水量建議 ml</label><input type="number" id="aminoSuggest" value="0" readonly></div>
-</div>
-<div class="note">依設定頁的總水量自動換算。</div>
-</div>
-</div>
+
+<div class="page" id="page-maintenance"><div class="card"><div class="section-title">維護系統</div><div class="tabs"><button class="tab active" data-maint-tab="hardware">硬體維護</button><button class="tab" data-maint-tab="consumable">耗材維護</button></div><div id="maintenance-hardware"></div><div id="maintenance-consumable" class="hidden"></div><button class="btn" id="save-maintenance-btn">儲存維護設定</button></div></div>
 
 <div class="page" id="page-settings">
-<div class="card">
-<div class="section-title">魚缸設定</div>
-<div class="input-grid">
-<div class="input-box"><label>總水量 L</label><input type="number" id="tankVolume" value="220"></div>
-<div class="input-box"><label>飼養類型</label><select id="tankType">
-<option>SPS</option><option>LPS</option><option>混養</option><option>FOWLR</option><option>Nano Reef</option><option>其他</option>
-</select></div>
-<div class="input-box full" id="customTypeBox" style="display:none"><label>自訂飼養類型</label><input id="customType" placeholder="例如：軟體缸、海葵缸"></div>
-</div>
-</div>
+<div class="card"><div class="section-title">魚缸資訊</div><div class="grid">
+<div class="field"><label>缸名</label><input id="tankName" value="主缸"></div><div class="field"><label>總水量 L</label><input type="number" id="tankVolume" value="220"></div><div class="field"><label>主缸尺寸</label><input id="tankSize" value="60×45×45 cm"></div><div class="field"><label>開缸日期</label><input type="date" id="startDate"></div><div class="field"><label>飼養類型</label><select id="tankType"><option>SPS</option><option>LPS</option><option>混養</option><option>FOWLR</option><option>Nano Reef</option><option>其他</option></select></div><div class="field"><label>系統型態</label><select id="systemType"><option>底濾</option><option>背濾</option><option>側濾</option><option>無底濾</option><option>其他</option></select></div><div class="field"><label>海水來源</label><select id="saltSource"><option>人工海水</option><option>天然海水</option><option>混合</option></select></div><div class="field"><label>厚沙系統</label><select id="dsb"><option>否</option><option>是</option></select></div><div class="field full" id="customTypeBox" style="display:none"><label>自訂飼養類型</label><input id="customType"></div>
+</div></div>
+<div class="card"><div class="section-title">目標水質</div><div class="section-sub">Stability Score 與異常判斷會依玩家自訂範圍。</div><div class="grid" id="targetGrid"></div><button class="btn" id="save-settings-btn">儲存設定</button></div>
 </div>
 
-<div class="bottom-nav">
-<div class="nav-btn nav-active" data-page="home">首頁</div>
-<div class="nav-btn" data-page="water">水質</div>
-<div class="nav-btn" data-page="dosing">添加</div>
-<div class="nav-btn" data-page="settings">設定</div>
-</div>
+<div class="bottom-nav"><div class="nav-btn nav-active" data-page="home">首頁</div><div class="nav-btn" data-page="water">水質</div><div class="nav-btn" data-page="dosing">添加</div><div class="nav-btn" data-page="maintenance">維護</div><div class="nav-btn" data-page="settings">設定</div></div>
 </div>
 
 <script>
-function $(id){return document.getElementById(id)}
-
-function checkLogin(){
-const user=localStorage.getItem('reefai-current-user')
-$('login-screen').style.display=user?'none':'flex'
-$('main-app').style.display=user?'block':'none'
-}
-
-function registerAccount(){
-const username=$('login-username').value.trim()
-const password=$('login-password').value.trim()
-if(!username||!password){alert('請輸入帳號與密碼');return}
-const key='reefai-user-'+username
-if(localStorage.getItem(key)){alert('此帳號已存在，請直接登入');return}
-localStorage.setItem(key,JSON.stringify({username,password}))
-localStorage.setItem('reefai-current-user',username)
-alert('帳號建立成功')
-checkLogin()
-}
-
-function login(){
-const username=$('login-username').value.trim()
-const password=$('login-password').value.trim()
-const raw=localStorage.getItem('reefai-user-'+username)
-if(!raw){alert('查無此帳號，請先建立帳號');return}
-const user=JSON.parse(raw)
-if(user.password!==password){alert('密碼錯誤');return}
-localStorage.setItem('reefai-current-user',username)
-checkLogin()
-}
-
-function logout(){
-localStorage.removeItem('reefai-current-user')
-checkLogin()
-}
-
-function todayString(){
-const d=new Date()
-return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')
-}
-function parseLocalDate(s){
-const p=s.split('-')
-return new Date(Number(p[0]),Number(p[1])-1,Number(p[2]))
-}
-function daysBetween(a,b){
-return Math.round((parseLocalDate(b)-parseLocalDate(a))/86400000)
-}
-function switchPage(page,btn){
-document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
-$('page-'+page).classList.add('active')
-document.querySelectorAll('.nav-btn').forEach(n=>n.classList.remove('nav-active'))
-btn.classList.add('nav-active')
-const map={home:'ReefAI',water:'水質日曆',dosing:'添加設定',settings:'設定'}
-$('header-title').childNodes[0].nodeValue=map[page]
-if(page==='water'){renderCalendar();estimateAll()}
-if(page==='dosing'){loadDosing();updateAmino();estimateAll()}
-if(page==='settings'){loadSettings();toggleCustomType()}
-}
-function saveToday(){
-const t=todayString()
-const data={
-date:t,
-kh:Number($('kh').value)||0,ca:Number($('ca').value)||0,mg:Number($('mg').value)||0,
-no3:Number($('no3').value)||0,po4:Number($('po4').value)||0,ph:Number($('ph').value)||0,
-no2:Number($('no2').value)||0,temp:Number($('temp').value)||0,waterchange:Number($('waterchange').value)||0,
-dosekh:Number($('dosekh').value)||0,doseca:Number($('doseca').value)||0,dosemg:Number($('dosemg').value)||0,
-doseamino:Number($('doseamino').value)||0,note:$('note').value||''
-}
-localStorage.setItem('reef-'+t,JSON.stringify(data))
-alert('今日活動已儲存')
-clearToday()
-renderCalendar()
-estimateAll()
-}
-function clearToday(){
-['kh','ca','mg','no3','po4','ph','no2','temp','waterchange','dosekh','doseca','dosemg','doseamino','note'].forEach(id=>$(id).value='')
-}
-function renderCalendar(){
-if(!$('monthPicker').value){
-const d=new Date()
-$('monthPicker').value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')
-}
-const [y,m]=$('monthPicker').value.split('-').map(Number)
-const days=new Date(y,m,0).getDate()
-let html=''
-for(let i=1;i<=days;i++){
-const date=y+'-'+String(m).padStart(2,'0')+'-'+String(i).padStart(2,'0')
-const has=localStorage.getItem('reef-'+date)?'has':''
-html+=`<button class="${has}" data-date="${date}">${i}</button>`
-}
-$('calendar').innerHTML=html
-document.querySelectorAll('#calendar button').forEach(btn=>{
-btn.addEventListener('click',()=>showDay(btn.dataset.date,btn))
-})
-}
-function showDay(date,btn){
-document.querySelectorAll('.calendar button').forEach(b=>b.classList.remove('selected'))
-if(btn)btn.classList.add('selected')
-const raw=localStorage.getItem('reef-'+date)
-if(!raw){$('dayDetail').innerHTML='無資料';return}
-const d=JSON.parse(raw)
-let html=''
-;['kh','ca','mg','no3','po4','ph','no2','temp'].forEach(k=>html+=detail(k.toUpperCase(),d[k]||0))
-html+=detail('換水',`${d.waterchange||0} L`)
-html+=detail('KH添加',`${d.dosekh||0} ml`)
-html+=detail('Ca添加',`${d.doseca||0} ml`)
-html+=detail('Mg添加',`${d.dosemg||0} ml`)
-html+=detail('胺基酸',`${d.doseamino||0} ml`)
-html+=detail('備註',d.note||'-')
-$('dayDetail').innerHTML=html
-}
+const $=id=>document.getElementById(id)
+const store={get(k,f){try{const r=localStorage.getItem('reefai.'+k);return r?JSON.parse(r):f}catch(e){return f}},set(k,v){localStorage.setItem('reefai.'+k,JSON.stringify(v))}}
+const defaults={settings:{tankName:'主缸',tankVolume:220,tankSize:'60×45×45 cm',startDate:'',tankType:'SPS',customType:'',systemType:'底濾',saltSource:'人工海水',dsb:'否',targets:{kh:{min:7.2,max:8.5},ca:{min:400,max:450},mg:{min:1250,max:1400},no3:{min:1,max:10},po4:{min:0.03,max:0.08},ph:{min:7.8,max:8.4},no2:{min:0,max:0.05},temp:{min:24.5,max:26}}},dosing:{khDaily:12,khPower:0.02,caDaily:0,caPower:1,mgDaily:0,mgPower:0.5,customProductName:'胺基酸',aminoPer100:5},maintenance:{hardware:[{name:'蛋白杯',freq:3,last:''},{name:'蛋白機',freq:30,last:''},{name:'造浪',freq:30,last:''},{name:'回水馬達',freq:60,last:''},{name:'燈具清潔',freq:30,last:''},{name:'濾棉',freq:7,last:''}],consumable:[{name:'活性碳',freq:30,last:''},{name:'NP 珠',freq:60,last:''},{name:'樹脂',freq:30,last:''},{name:'UV 燈管',freq:180,last:''}]}}
+let settings=store.get('settings',defaults.settings),dosing=store.get('dosing',defaults.dosing),maintenance=store.get('maintenance',defaults.maintenance)
+function todayString(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function parseLocalDate(s){if(!s)return null;const p=s.split('-');return new Date(Number(p[0]),Number(p[1])-1,Number(p[2]))}
+function daysBetween(a,b){return Math.round((parseLocalDate(b)-parseLocalDate(a))/86400000)}
+function addDays(date,days){const d=parseLocalDate(date);d.setDate(d.getDate()+Number(days));return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function nextDue(last,freq){if(!last)return todayString();let next=last;while(parseLocalDate(next)<parseLocalDate(todayString()))next=addDays(next,freq);return next}
+function dueStatus(last,freq){if(!last)return {text:'尚未設定最後維護日',cls:'due',due:true,next:todayString()};const next=nextDue(last,freq);const diff=daysBetween(todayString(),next);if(diff<0)return {text:`已逾期 ${Math.abs(diff)} 天`,cls:'over',due:true,next};if(diff===0)return {text:'今日到期',cls:'due',due:true,next};return {text:`下次：${next}`,cls:'',due:false,next}}
+function checkLogin(){const u=localStorage.getItem('reefai-current-user');$('login-screen').style.display=u?'none':'flex';$('main-app').style.display=u?'block':'none'}
+function registerAccount(){const u=$('login-username').value.trim(),p=$('login-password').value.trim();if(!u||!p){alert('請輸入帳號與密碼');return}const k='reefai-user-'+u;if(localStorage.getItem(k)){alert('此帳號已存在，請直接登入');return}localStorage.setItem(k,JSON.stringify({username:u,password:p}));localStorage.setItem('reefai-current-user',u);alert('帳號建立成功');checkLogin()}
+function login(){const u=$('login-username').value.trim(),p=$('login-password').value.trim(),raw=localStorage.getItem('reefai-user-'+u);if(!raw){alert('查無此帳號，請先建立帳號');return}const user=JSON.parse(raw);if(user.password!==p){alert('密碼錯誤');return}localStorage.setItem('reefai-current-user',u);checkLogin()}
+function logout(){localStorage.removeItem('reefai-current-user');checkLogin()}
+function switchPage(page,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));$('page-'+page).classList.add('active');document.querySelectorAll('.nav-btn').forEach(n=>n.classList.remove('nav-active'));btn.classList.add('nav-active');const map={home:'ReefAI',water:'水質日曆',dosing:'添加系統',maintenance:'維護系統',settings:'設定'};$('header-title').childNodes[0].nodeValue=map[page];if(page==='home')renderHome();if(page==='water'){renderCalendar();estimateAll();renderChart()}if(page==='dosing'){loadDosingToUI();updateAmino();estimateAll()}if(page==='maintenance')renderMaintenance();if(page==='settings')loadSettingsToUI()}
+function saveToday(){const t=todayString(),data={date:t,kh:Number($('kh').value)||0,ca:Number($('ca').value)||0,mg:Number($('mg').value)||0,no3:Number($('no3').value)||0,po4:Number($('po4').value)||0,ph:Number($('ph').value)||0,no2:Number($('no2').value)||0,temp:Number($('temp').value)||0,waterchange:Number($('waterchange').value)||0,dosekh:Number($('dosekh').value)||0,doseca:Number($('doseca').value)||0,dosemg:Number($('dosemg').value)||0,doseamino:Number($('doseamino').value)||0,note:$('note').value||''};store.set('water.'+t,data);alert('今日活動已儲存');['kh','ca','mg','no3','po4','ph','no2','temp','waterchange','dosekh','doseca','dosemg','doseamino','note'].forEach(id=>$(id).value='');renderHome();renderCalendar();estimateAll();renderChart()}
+function getRecords(){let arr=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.startsWith('reefai.water.')){try{arr.push(JSON.parse(localStorage.getItem(k)))}catch(e){}}}arr.sort((a,b)=>a.date.localeCompare(b.date));return arr}
+function latestRecord(){const r=getRecords();return r.length?r[r.length-1]:null}
+function renderHome(){renderTasks();renderAlerts();renderScore()}
+function renderTasks(){let items=[];maintenance.hardware.concat(maintenance.consumable).forEach(m=>{const s=dueStatus(m.last,m.freq);if(s.due)items.push({name:m.name,status:s.text})});$('todayTasks').innerHTML=items.length?items.map(i=>`<div class="task"><input type="checkbox"><div class="task-main">${i.name}<div class="task-sub">${i.status}</div></div></div>`).join(''):'尚無今日任務。'}
+function renderAlerts(){const r=latestRecord();if(!r){$('alerts').innerHTML='目前無異常。';return}let a=[];Object.keys(settings.targets).forEach(k=>{const v=Number(r[k])||0;if(v===0)return;const t=settings.targets[k];if(v<t.min)a.push(`${k.toUpperCase()} 低於目標範圍`);if(v>t.max)a.push(`${k.toUpperCase()} 高於目標範圍`)});$('alerts').innerHTML=a.length?a.map(x=>`<div>⚠️ ${x}</div>`).join(''):'目前無異常。'}
+function renderScore(){const r=latestRecord();let e=0;if(r){Object.keys(settings.targets).forEach(k=>{const v=Number(r[k])||0;if(v===0)return;const t=settings.targets[k];if(v<t.min||v>t.max)e++})}const overdue=maintenance.hardware.concat(maintenance.consumable).filter(m=>dueStatus(m.last,m.freq).cls==='over').length;let score=100-e*12-overdue*8;if(score<20)score=20;$('score').innerText=score}
+function renderCalendar(){if(!$('monthPicker').value){const d=new Date();$('monthPicker').value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')}const [y,m]=$('monthPicker').value.split('-').map(Number);const days=new Date(y,m,0).getDate();let html='';for(let i=1;i<=days;i++){const date=y+'-'+String(m).padStart(2,'0')+'-'+String(i).padStart(2,'0'),has=store.get('water.'+date,null)?'has':'';html+=`<button class="${has}" data-date="${date}">${i}</button>`}$('calendar').innerHTML=html;document.querySelectorAll('#calendar button').forEach(btn=>btn.addEventListener('click',()=>showDay(btn.dataset.date,btn)))}
+function showDay(date,btn){document.querySelectorAll('.calendar button').forEach(b=>b.classList.remove('selected'));if(btn)btn.classList.add('selected');const d=store.get('water.'+date,null);if(!d){$('dayDetail').innerHTML='無資料';return}let html='';['kh','ca','mg','no3','po4','ph','no2','temp'].forEach(k=>html+=detail(k.toUpperCase(),d[k]||0));html+=detail('換水',`${d.waterchange||0} L`)+detail('KH添加',`${d.dosekh||0} ml`)+detail('Ca添加',`${d.doseca||0} ml`)+detail('Mg添加',`${d.dosemg||0} ml`)+detail('胺基酸',`${d.doseamino||0} ml`)+detail('備註',d.note||'-');$('dayDetail').innerHTML=html}
 function detail(a,b){return `<div class="detail"><span>${a}</span><b>${b}</b></div>`}
-function getRecords(){
-let arr=[]
-for(let i=0;i<localStorage.length;i++){
-const k=localStorage.key(i)
-if(k.startsWith('reef-'))arr.push(JSON.parse(localStorage.getItem(k)))
-}
-arr.sort((a,b)=>a.date.localeCompare(b.date))
-return arr
-}
-function saveDosing(){
-['khDaily','khPower','caDaily','caPower','mgDaily','mgPower','aminoPer100'].forEach(id=>localStorage.setItem(id,$(id).value))
-}
-function loadDosing(){
-['khDaily','khPower','caDaily','caPower','mgDaily','mgPower','aminoPer100'].forEach(id=>{const v=localStorage.getItem(id);if(v!==null)$(id).value=v})
-}
-function saveSettings(){
-localStorage.setItem('tankVolume',$('tankVolume').value)
-localStorage.setItem('tankType',$('tankType').value)
-localStorage.setItem('customType',$('customType').value)
-}
-function loadSettings(){
-const tv=localStorage.getItem('tankVolume');if(tv!==null)$('tankVolume').value=tv
-const tt=localStorage.getItem('tankType');if(tt!==null)$('tankType').value=tt
-const ct=localStorage.getItem('customType');if(ct!==null)$('customType').value=ct
-}
-function toggleCustomType(){
-$('customTypeBox').style.display=$('tankType').value==='其他'?'block':'none'
-}
-function updateAmino(){
-const tank=Number($('tankVolume').value)||0
-const per100=Number($('aminoPer100').value)||0
-$('aminoSuggest').value=((tank/100)*per100).toFixed(1)
-}
-function estimateAll(){
-const rec=getRecords().filter(r=>r.kh>0||r.ca>0||r.mg>0)
-if(rec.length<2){$('consumption').innerHTML='至少需要兩筆 KH / Ca / Mg 紀錄。';return}
-const prev=rec[rec.length-2],last=rec[rec.length-1]
-const days=daysBetween(prev.date,last.date)
-if(days<=0){$('consumption').innerHTML='兩筆紀錄日期相同，無法估算。';return}
-const tank=Number($('tankVolume').value)||220
-let html=''
-html+=estimateOne('KH','kh','dKH',prev,last,days,tank,'khDaily','khPower')
-html+=estimateOne('Ca','ca','ppm',prev,last,days,tank,'caDaily','caPower')
-html+=estimateOne('Mg','mg','ppm',prev,last,days,tank,'mgDaily','mgPower')
-$('consumption').innerHTML=html
-}
-function estimateOne(label,key,unit,prev,last,days,tank,dailyId,powerId){
-const a=Number(prev[key])||0,b=Number(last[key])||0
-if(a<=0||b<=0)return `<div class="consumption-box"><h4>${label}</h4>資料不足，暫無法估算。</div>`
-const daily=Number($(dailyId).value)||0
-const power=Number($(powerId).value)||0
-const real=power*(100/tank)
-const added=daily*days*real
-const change=b-a
-const total=added-change
-const consume=total/days
-const recommend=real>0?consume/real:0
-const diff=recommend-daily
-let advice='目前添加量接近估算消耗量。'
-if(diff>0.1)advice=`建議每日提高約 ${diff.toFixed(1)} ml，調整至 ${recommend.toFixed(1)} ml/day。`
-if(diff<-0.1)advice=`目前可能偏高，可每日降低約 ${Math.abs(diff).toFixed(1)} ml。`
-return `<div class="consumption-box"><h4>${label}</h4>
-區間：${prev.date} → ${last.date}，共 ${days} 天。<br>
-數值：${a} → ${b} ${unit}。<br>
-目前每日添加：${daily} ml/day。<br>
-估算每日消耗：<b>${consume.toFixed(3)} ${unit}/day</b><br>
-${advice}
-</div>`
+function saveDosingFromUI(){['khDaily','khPower','caDaily','caPower','mgDaily','mgPower','customProductName','aminoPer100'].forEach(id=>dosing[id]=isNaN(Number($(id).value))?$(id).value:Number($(id).value));store.set('dosing',dosing)}
+function loadDosingToUI(){Object.keys(dosing).forEach(k=>{if($(k))$(k).value=dosing[k]})}
+function updateAmino(){$('aminoSuggest').value=((Number(settings.tankVolume)||0)/100*(Number(dosing.aminoPer100)||0)).toFixed(1)}
+function estimateAll(){const rec=getRecords().filter(r=>r.kh>0||r.ca>0||r.mg>0);if(rec.length<2){$('consumption').innerHTML='至少需要兩筆 KH / Ca / Mg 紀錄。';return}const prev=rec[rec.length-2],last=rec[rec.length-1],days=daysBetween(prev.date,last.date);if(days<=0){$('consumption').innerHTML='兩筆紀錄日期相同，無法估算。';return}const tank=Number(settings.tankVolume)||220;let html='';html+=estimateOne('KH','kh','dKH',prev,last,days,tank,dosing.khDaily,dosing.khPower);html+=estimateOne('Ca','ca','ppm',prev,last,days,tank,dosing.caDaily,dosing.caPower);html+=estimateOne('Mg','mg','ppm',prev,last,days,tank,dosing.mgDaily,dosing.mgPower);$('consumption').innerHTML=html}
+function estimateOne(label,key,unit,prev,last,days,tank,daily,power){const a=Number(prev[key])||0,b=Number(last[key])||0;if(a<=0||b<=0)return `<div class="consumption-box"><h4>${label}</h4>資料不足，暫無法估算。</div>`;const real=power*(100/tank),added=daily*days*real,change=b-a,consume=(added-change)/days,recommend=real>0?consume/real:0,diff=recommend-daily;let advice='目前添加量接近估算消耗量。';if(diff>0.1)advice=`建議每日提高約 ${diff.toFixed(1)} ml，調整至 ${recommend.toFixed(1)} ml/day。`;if(diff<-0.1)advice=`目前可能偏高，可每日降低約 ${Math.abs(diff).toFixed(1)} ml。`;return `<div class="consumption-box"><h4>${label}</h4>區間：${prev.date} → ${last.date}，共 ${days} 天。<br>數值：${a} → ${b} ${unit}。<br>目前每日添加：${daily} ml/day。<br>估算每日消耗：<b>${consume.toFixed(3)} ${unit}/day</b><br>${advice}</div>`}
+function renderMaintenance(){renderMaintenanceGroup('hardware','maintenance-hardware');renderMaintenanceGroup('consumable','maintenance-consumable')}
+function renderMaintenanceGroup(group,id){$(id).innerHTML=maintenance[group].map((m,i)=>{const s=dueStatus(m.last,m.freq);return `<div class="card" style="box-shadow:none;background:#f0f9fd;margin-bottom:10px"><div class="section-title" style="font-size:16px;margin-bottom:8px">${m.name}</div><div class="grid"><div class="field"><label>頻率 / 天</label><input type="number" data-mgroup="${group}" data-midx="${i}" data-mfield="freq" value="${m.freq}"></div><div class="field"><label>最後維護日</label><input type="date" data-mgroup="${group}" data-midx="${i}" data-mfield="last" value="${m.last||''}"></div></div><span class="badge ${s.cls}">${s.text}</span><button class="btn-secondary" data-complete="${group}.${i}">今日已完成</button></div>`}).join('');document.querySelectorAll('[data-complete]').forEach(btn=>btn.onclick=()=>{const [g,i]=btn.dataset.complete.split('.');maintenance[g][Number(i)].last=todayString();store.set('maintenance',maintenance);renderMaintenance();renderHome()});document.querySelectorAll('[data-mgroup]').forEach(input=>input.oninput=()=>{const g=input.dataset.mgroup,i=Number(input.dataset.midx),f=input.dataset.mfield;maintenance[g][i][f]=f==='freq'?Number(input.value)||0:input.value})}
+function saveMaintenance(){store.set('maintenance',maintenance);alert('維護設定已儲存');renderMaintenance();renderHome()}
+function renderTargetGrid(){const labels={kh:'KH',ca:'Ca',mg:'Mg',no3:'NO3',po4:'PO4',ph:'pH',no2:'NO2',temp:'Temp'};$('targetGrid').innerHTML=Object.keys(settings.targets).map(k=>`<div class="field"><label>${labels[k]} 下限</label><input type="number" step="0.01" data-target="${k}" data-edge="min" value="${settings.targets[k].min}"></div><div class="field"><label>${labels[k]} 上限</label><input type="number" step="0.01" data-target="${k}" data-edge="max" value="${settings.targets[k].max}"></div>`).join('');document.querySelectorAll('[data-target]').forEach(input=>input.oninput=()=>{settings.targets[input.dataset.target][input.dataset.edge]=Number(input.value)||0})}
+function loadSettingsToUI(){['tankName','tankVolume','tankSize','startDate','tankType','customType','systemType','saltSource','dsb'].forEach(k=>{if($(k))$(k).value=settings[k]});toggleCustomType();renderTargetGrid()}
+function saveSettingsFromUI(){['tankName','tankSize','startDate','tankType','customType','systemType','saltSource','dsb'].forEach(k=>settings[k]=$(k).value);settings.tankVolume=Number($('tankVolume').value)||0;store.set('settings',settings);alert('設定已儲存');updateAmino();renderHome()}
+function toggleCustomType(){$('customTypeBox').style.display=$('tankType').value==='其他'?'block':'none'}
+
+let currentChart='kh'
+
+function renderChart(){
+const wrap=$('chartWrap')
+const legend=$('chartLegend')
+if(!wrap)return
+
+const records=getRecords().slice(-14)
+if(records.length<2){
+wrap.innerHTML='<div class="chart-empty">至少需要兩筆水質紀錄才會產生圖表。</div>'
+legend.innerHTML=''
+return
 }
 
-window.addEventListener('DOMContentLoaded',()=>{
-$('login-btn').addEventListener('click',login)
-$('register-btn').addEventListener('click',registerAccount)
-$('logout-btn').addEventListener('click',logout)
-$('save-today-btn').addEventListener('click',saveToday)
-document.querySelectorAll('.nav-btn').forEach(btn=>btn.addEventListener('click',()=>switchPage(btn.dataset.page,btn)))
-;['khDaily','khPower','caDaily','caPower','mgDaily','mgPower','aminoPer100'].forEach(id=>{
-$(id).addEventListener('input',()=>{saveDosing();updateAmino();estimateAll()})
-})
-$('tankVolume').addEventListener('input',()=>{saveSettings();updateAmino();estimateAll()})
-$('tankType').addEventListener('change',()=>{toggleCustomType();saveSettings()})
-$('customType').addEventListener('input',saveSettings)
-checkLogin()
-loadSettings()
-loadDosing()
-updateAmino()
-renderCalendar()
-})
+if(currentChart==='nutrient'){
+drawMultiLineChart(records,'no3','NO3','po4','PO4')
+}else{
+const labelMap={kh:'KH',ca:'Ca',mg:'Mg'}
+const unitMap={kh:'dKH',ca:'ppm',mg:'ppm'}
+drawSingleLineChart(records,currentChart,labelMap[currentChart],unitMap[currentChart])
+}
+}
+
+function drawSingleLineChart(records,key,label,unit){
+const values=records.map(r=>Number(r[key])||0).filter(v=>v>0)
+if(values.length<2){
+$('chartWrap').innerHTML='<div class="chart-empty">'+label+' 至少需要兩筆有效紀錄。</div>'
+$('chartLegend').innerHTML=''
+return
+}
+
+const data=records.map(r=>({date:r.date,value:Number(r[key])||0})).filter(r=>r.value>0)
+const min=Math.min(...data.map(d=>d.value))
+const max=Math.max(...data.map(d=>d.value))
+const pad=(max-min)*0.18 || 1
+const yMin=min-pad
+const yMax=max+pad
+
+const w=360,h=220,left=42,right=14,top=18,bottom=34
+const plotW=w-left-right
+const plotH=h-top-bottom
+
+function x(i){return left+(data.length===1?0:(i/(data.length-1))*plotW)}
+function y(v){return top+((yMax-v)/(yMax-yMin))*plotH}
+
+let points=data.map((d,i)=>x(i)+','+y(d.value)).join(' ')
+let circles=data.map((d,i)=>'<circle cx="'+x(i)+'" cy="'+y(d.value)+'" r="4"><title>'+d.date+' '+d.value+'</title></circle>').join('')
+let labels=data.map((d,i)=>{
+if(i!==0 && i!==data.length-1)return ''
+return '<text x="'+x(i)+'" y="'+(h-10)+'" text-anchor="'+(i===0?'start':'end')+'" font-size="11" fill="#607080">'+d.date.slice(5)+'</text>'
+}).join('')
+
+$('chartWrap').innerHTML=
+'<svg class="chart-svg" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none">'+
+'<line x1="'+left+'" y1="'+top+'" x2="'+left+'" y2="'+(h-bottom)+'" stroke="#cbe3f0"/>'+
+'<line x1="'+left+'" y1="'+(h-bottom)+'" x2="'+(w-right)+'" y2="'+(h-bottom)+'" stroke="#cbe3f0"/>'+
+'<text x="6" y="'+(top+4)+'" font-size="11" fill="#607080">'+yMax.toFixed(key==="kh"?1:0)+'</text>'+
+'<text x="6" y="'+(h-bottom)+'" font-size="11" fill="#607080">'+yMin.toFixed(key==="kh"?1:0)+'</text>'+
+'<polyline points="'+points+'" fill="none" stroke="#00a6c8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>'+
+'<g fill="#0077b6">'+circles+'</g>'+labels+
+'</svg>'
+
+const first=data[0],last=data[data.length-1]
+const diff=last.value-first.value
+$('chartLegend').innerHTML=label+' 最近趨勢：'+first.value+' → '+last.value+' '+unit+'，變化 '+(diff>=0?'+':'')+diff.toFixed(key==='kh'?2:0)+' '+unit+'。'
+}
+
+function drawMultiLineChart(records,key1,label1,key2,label2){
+const data=records.map(r=>({date:r.date,v1:Number(r[key1])||0,v2:Number(r[key2])||0})).filter(r=>r.v1>0||r.v2>0)
+if(data.length<2){
+$('chartWrap').innerHTML='<div class="chart-empty">NO3 / PO4 至少需要兩筆有效紀錄。</div>'
+$('chartLegend').innerHTML=''
+return
+}
+
+const max1=Math.max(...data.map(d=>d.v1),1)
+const max2=Math.max(...data.map(d=>d.v2),0.01)
+
+const w=360,h=220,left=42,right=14,top=18,bottom=34
+const plotW=w-left-right
+const plotH=h-top-bottom
+function x(i){return left+(data.length===1?0:(i/(data.length-1))*plotW)}
+function y1(v){return top+((max1-v)/max1)*plotH}
+function y2(v){return top+((max2-v)/max2)*plotH}
+
+let p1=data.map((d,i)=>x(i)+','+y1(d.v1)).join(' ')
+let p2=data.map((d,i)=>x(i)+','+y2(d.v2)).join(' ')
+let labels=data.map((d,i)=>{
+if(i!==0 && i!==data.length-1)return ''
+return '<text x="'+x(i)+'" y="'+(h-10)+'" text-anchor="'+(i===0?'start':'end')+'" font-size="11" fill="#607080">'+d.date.slice(5)+'</text>'
+}).join('')
+
+$('chartWrap').innerHTML=
+'<svg class="chart-svg" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none">'+
+'<line x1="'+left+'" y1="'+top+'" x2="'+left+'" y2="'+(h-bottom)+'" stroke="#cbe3f0"/>'+
+'<line x1="'+left+'" y1="'+(h-bottom)+'" x2="'+(w-right)+'" y2="'+(h-bottom)+'" stroke="#cbe3f0"/>'+
+'<polyline points="'+p1+'" fill="none" stroke="#00a6c8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>'+
+'<polyline points="'+p2+'" fill="none" stroke="#b7791f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>'+
+labels+
+'</svg>'
+
+$('chartLegend').innerHTML='藍線：NO3，棕線：PO4。雙線使用各自比例尺，先看趨勢方向。'
+}
+
+
+function bindEvents(){$('login-btn').onclick=login;$('register-btn').onclick=registerAccount;$('logout-btn').onclick=logout;$('save-today-btn').onclick=saveToday;$('save-maintenance-btn').onclick=saveMaintenance;$('save-settings-btn').onclick=saveSettingsFromUI;document.querySelectorAll('.nav-btn').forEach(btn=>btn.onclick=()=>switchPage(btn.dataset.page,btn));document.querySelectorAll('[data-chart]').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('[data-chart]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');currentChart=btn.dataset.chart;renderChart()});document.querySelectorAll('[data-maint-tab]').forEach(tab=>tab.onclick=()=>{document.querySelectorAll('[data-maint-tab]').forEach(t=>t.classList.remove('active'));tab.classList.add('active');$('maintenance-hardware').classList.toggle('hidden',tab.dataset.maintTab!=='hardware');$('maintenance-consumable').classList.toggle('hidden',tab.dataset.maintTab!=='consumable')});['khDaily','khPower','caDaily','caPower','mgDaily','mgPower','customProductName','aminoPer100'].forEach(id=>$(id).oninput=()=>{saveDosingFromUI();updateAmino();estimateAll()});$('tankType').onchange=()=>toggleCustomType()}
+window.addEventListener('DOMContentLoaded',()=>{bindEvents();checkLogin();loadDosingToUI();loadSettingsToUI();renderMaintenance();renderHome();renderCalendar();updateAmino();renderChart()})
 </script>
 </body>
 </html>
