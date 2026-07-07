@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ReefAI v4.1</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft JhengHei",Arial,sans-serif;
+background:#eef7fb;
+color:#163047;
+}
+.app{
+max-width:430px;
+margin:auto;
+min-height:100vh;
+background:#f6fcff;
+box-shadow:0 0 24px rgba(0,0,0,.06);
+}
+.header{
+padding:calc(18px + env(safe-area-inset-top)) 18px 18px;
+font-size:24px;
+font-weight:800;
+text-align:center;
+background:white;
+position:sticky;
+top:0;
+z-index:10;
+border-bottom:1px solid #dcecf5;
+}
+.page{
+display:none;
+padding:18px;
+padding-bottom:calc(96px + env(safe-area-inset-bottom));
+}
+.page.active{display:block}
+.card{
+background:white;
+border-radius:20px;
+padding:18px;
+margin-bottom:16px;
+box-shadow:0 6px 18px rgba(0,0,0,.06);
+}
+.section-title{
+font-size:18px;
+font-weight:800;
+margin-bottom:14px;
+}
+.score{
+font-size:48px;
+font-weight:900;
+text-align:center;
+color:#0077b6;
+}
+.status-grid,.input-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+.status-item,.input-box{
+background:#f0f9fd;
+padding:12px;
+border-radius:16px;
+}
+.status-label,.input-box label{
+font-size:13px;
+color:#607080;
+display:block;
+margin-bottom:6px;
+font-weight:700;
+}
+.status-value{
+font-size:22px;
+font-weight:900;
+}
+input,textarea,select{
+width:100%;
+padding:11px;
+border:1px solid #cbe3f0;
+border-radius:12px;
+font-size:15px;
+background:#fff;
+color:#163047;
+}
+textarea{resize:vertical}
+.full{grid-column:1/-1}
+.btn{
+width:100%;
+padding:14px;
+border:none;
+border-radius:16px;
+background:linear-gradient(135deg,#00b4d8,#0096c7);
+color:white;
+font-size:16px;
+font-weight:800;
+margin-top:14px;
+cursor:pointer;
+}
+.task{
+padding:12px 0;
+border-bottom:1px solid #edf4f7;
+display:flex;
+align-items:center;
+gap:10px;
+}
+.task:last-child{border-bottom:none}
+.calendar{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:6px;
+margin-top:12px;
+}
+.calendar button{
+border:none;
+border-radius:12px;
+padding:10px 0;
+background:#eef8ff;
+cursor:pointer;
+}
+.calendar button.has{
+background:#b8ecff;
+font-weight:800;
+}
+.calendar button.selected{
+background:#00b4d8;
+color:white;
+font-weight:900;
+}
+.detail{
+padding:9px 0;
+border-bottom:1px solid #edf4f7;
+display:flex;
+justify-content:space-between;
+gap:12px;
+font-size:14px;
+}
+.detail:last-child{border-bottom:none}
+.detail b{text-align:right}
+.note{
+margin-top:10px;
+font-size:13px;
+line-height:1.6;
+color:#607080;
+}
+.consumption-box{
+background:#f0f9fd;
+border-radius:16px;
+padding:14px;
+margin-bottom:12px;
+line-height:1.7;
+font-size:14px;
+}
+.consumption-box h4{margin:0 0 8px}
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:100%;
+max-width:430px;
+height:calc(70px + env(safe-area-inset-bottom));
+padding-bottom:env(safe-area-inset-bottom);
+background:white;
+display:flex;
+border-top:1px solid #dcecf5;
+z-index:20;
+}
+.nav-btn{
+flex:1;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:14px;
+cursor:pointer;
+}
+.nav-active{
+color:#00a6c8;
+font-weight:900;
+}
+@media (min-width: 700px){
+.app{max-width:520px}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+<div class="header" id="header-title">ReefAI</div>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+<div class="card">
+<div class="section-title">Stability Score</div>
+<div class="score" id="score">92</div>
+<div class="note">依目前資料估算，未輸入水質時顯示 0，但不列為異常。</div>
+</div>
+
+<div class="card">
+<div class="section-title">今日異常</div>
+<div id="alerts">目前無異常。</div>
+</div>
+
+<div class="card">
+<div class="section-title">今日任務</div>
+<div id="todayTasks">
+<div class="task"><input type="checkbox"> <div>清洗蛋白杯</div></div>
+<div class="task"><input type="checkbox"> <div>更換濾棉</div></div>
+</div>
+</div>
+
+<div class="card">
+<div class="section-title">今日活動</div>
+<div class="input-grid">
+<div class="input-box"><label>KH</label><input type="number" id="kh" step="0.1" placeholder="0"></div>
+<div class="input-box"><label>Ca</label><input type="number" id="ca" step="1" placeholder="0"></div>
+<div class="input-box"><label>Mg</label><input type="number" id="mg" step="1" placeholder="0"></div>
+<div class="input-box"><label>NO3</label><input type="number" id="no3" step="0.1" placeholder="0"></div>
+<div class="input-box"><label>PO4</label><input type="number" id="po4" step="0.01" placeholder="0"></div>
+<div class="input-box"><label>pH</label><input type="number" id="ph" step="0.1" placeholder="0"></div>
+<div class="input-box"><label>NO2</label><input type="number" id="no2" step="0.01" placeholder="0"></div>
+<div class="input-box"><label>Temp</label><input type="number" id="temp" step="0.1" placeholder="0"></div>
+<div class="input-box full"><label>是否換水：_____ 公升</label><input type="number" id="waterchange" step="1" placeholder="未換水請填 0 或留空"></div>
+<div class="input-box"><label>KH 添加 ml</label><input type="number" id="dosekh" step="0.1" placeholder="0"></div>
+<div class="input-box"><label>Ca 添加 ml</label><input type="number" id="doseca" step="0.1" placeholder="0"></div>
+<div class="input-box"><label>Mg 添加 ml</label><input type="number" id="dosemg" step="0.1" placeholder="0"></div>
+<div class="input-box"><label>胺基酸 ml</label><input type="number" id="doseamino" step="0.1" placeholder="0"></div>
+<div class="input-box full"><label>備註</label><textarea id="note" rows="3" placeholder="例如：SPS 顏色偏淡、新增生物、爆藻、停電等"></textarea></div>
+</div>
+<button class="btn" onclick="saveToday()">儲存今日活動</button>
+</div>
+</div>
+
+<!-- WATER -->
+<div class="page" id="page-water">
+<div class="card">
+<div class="section-title">水質日曆</div>
+<input type="month" id="monthPicker" onchange="renderCalendar()">
+<div class="calendar" id="calendar"></div>
+</div>
+
+<div class="card">
+<div class="section-title">當日資料</div>
+<div id="dayDetail">請點選日期。</div>
+</div>
+
+<div class="card">
+<div class="section-title">消耗估算</div>
+<div id="consumption">至少需要兩筆 KH / Ca / Mg 紀錄。</div>
+</div>
+</div>
+
+<!-- DOSING -->
+<div class="page" id="page-dosing">
+<div class="card">
+<div class="section-title">KH 溶液</div>
+<div class="input-grid">
+<div class="input-box"><label>每日添加 ml</label><input type="number" id="khDaily" value="12" step="0.1" oninput="saveDosing();estimateAll()"></div>
+<div class="input-box"><label>每 1ml / 100L 提升 dKH</label><input type="number" id="khPower" value="0.02" step="0.001" oninput="saveDosing();estimateAll()"></div>
+</div>
+<div class="note">建議模板：一公升泡 60g，100L 水 1ml 上升 0.02 dKH。可自行修改。</div>
+</div>
+
+<div class="card">
+<div class="section-title">Ca 溶液</div>
+<div class="input-grid">
+<div class="input-box"><label>每日添加 ml</label><input type="number" id="caDaily" value="0" step="0.1" oninput="saveDosing();estimateAll()"></div>
+<div class="input-box"><label>每 1ml / 100L 提升 ppm</label><input type="number" id="caPower" value="1" step="0.001" oninput="saveDosing();estimateAll()"></div>
+</div>
+<div class="note">建議模板：一公升泡 368g，100L 水 1ml 上升 1 ppm。可自行修改。</div>
+</div>
+
+<div class="card">
+<div class="section-title">Mg 溶液</div>
+<div class="input-grid">
+<div class="input-box"><label>每日添加 ml</label><input type="number" id="mgDaily" value="0" step="0.1" oninput="saveDosing();estimateAll()"></div>
+<div class="input-box"><label>每 1ml / 100L 提升 ppm</label><input type="number" id="mgPower" value="0.5" step="0.001" oninput="saveDosing();estimateAll()"></div>
+</div>
+<div class="note">建議模板：一公升泡 425g，100L 水 1ml 上升 0.5 ppm。可自行修改。</div>
+</div>
+
+<div class="card">
+<div class="section-title">標準劑量產品，例如胺基酸</div>
+<div class="input-grid">
+<div class="input-box"><label>每 100L 建議 ml</label><input type="number" id="aminoPer100" value="5" step="0.1" oninput="saveDosing();updateAmino()"></div>
+<div class="input-box"><label>依總水量建議 ml</label><input type="number" id="aminoSuggest" value="0" readonly></div>
+</div>
+<div class="note">依設定頁的總水量自動換算。</div>
+</div>
+</div>
+
+<!-- SETTINGS -->
+<div class="page" id="page-settings">
+<div class="card">
+<div class="section-title">魚缸設定</div>
+<div class="input-grid">
+<div class="input-box"><label>總水量 L</label><input type="number" id="tankVolume" value="220" oninput="saveSettings();updateAmino();estimateAll()"></div>
+<div class="input-box"><label>飼養類型</label><select id="tankType" onchange="toggleCustomType();saveSettings()">
+<option>SPS</option><option>LPS</option><option>混養</option><option>FOWLR</option><option>Nano Reef</option><option>其他</option>
+</select></div>
+<div class="input-box full" id="customTypeBox" style="display:none"><label>自訂飼養類型</label><input id="customType" oninput="saveSettings()" placeholder="例如：軟體缸、海葵缸"></div>
+</div>
+</div>
+
+<div class="card">
+<div class="section-title">期望水質</div>
+<div class="input-grid">
+<div class="input-box"><label>KH 下限</label><input id="minKH" value="7.2" type="number" step="0.1"></div>
+<div class="input-box"><label>KH 上限</label><input id="maxKH" value="8.5" type="number" step="0.1"></div>
+<div class="input-box"><label>PO4 下限</label><input id="minPO4" value="0.03" type="number" step="0.01"></div>
+<div class="input-box"><label>PO4 上限</label><input id="maxPO4" value="0.08" type="number" step="0.01"></div>
+</div>
+</div>
+</div>
+
+<div class="bottom-nav">
+<div class="nav-btn nav-active" onclick="switchPage('home',this)">首頁</div>
+<div class="nav-btn" onclick="switchPage('water',this)">水質</div>
+<div class="nav-btn" onclick="switchPage('dosing',this)">添加</div>
+<div class="nav-btn" onclick="switchPage('settings',this)">設定</div>
+</div>
+</div>
+
+<script>
+function $(id){return document.getElementById(id)}
+function todayString(){
+const d=new Date()
+return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')
+}
+function parseLocalDate(s){
+const p=s.split('-')
+return new Date(Number(p[0]),Number(p[1])-1,Number(p[2]))
+}
+function daysBetween(a,b){
+return Math.round((parseLocalDate(b)-parseLocalDate(a))/86400000)
+}
+function switchPage(page,btn){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+$('page-'+page).classList.add('active')
+document.querySelectorAll('.nav-btn').forEach(n=>n.classList.remove('nav-active'))
+btn.classList.add('nav-active')
+const map={home:'ReefAI',water:'水質日曆',dosing:'添加設定',settings:'設定'}
+$('header-title').innerText=map[page]
+if(page==='water'){renderCalendar();estimateAll()}
+if(page==='dosing'){loadDosing();updateAmino();estimateAll()}
+if(page==='settings'){loadSettings();toggleCustomType()}
+}
+function saveToday(){
+const t=todayString()
+const data={
+date:t,
+kh:Number($('kh').value)||0,
+ca:Number($('ca').value)||0,
+mg:Number($('mg').value)||0,
+no3:Number($('no3').value)||0,
+po4:Number($('po4').value)||0,
+ph:Number($('ph').value)||0,
+no2:Number($('no2').value)||0,
+temp:Number($('temp').value)||0,
+waterchange:Number($('waterchange').value)||0,
+dosekh:Number($('dosekh').value)||0,
+doseca:Number($('doseca').value)||0,
+dosemg:Number($('dosemg').value)||0,
+doseamino:Number($('doseamino').value)||0,
+note:$('note').value||''
+}
+localStorage.setItem('reef-'+t,JSON.stringify(data))
+alert('今日活動已儲存')
+clearToday()
+renderCalendar()
+estimateAll()
+}
+function clearToday(){
+['kh','ca','mg','no3','po4','ph','no2','temp','waterchange','dosekh','doseca','dosemg','doseamino','note'].forEach(id=>$(id).value='')
+}
+function renderCalendar(){
+if(!$('monthPicker').value){
+const d=new Date()
+$('monthPicker').value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')
+}
+const [y,m]=$('monthPicker').value.split('-').map(Number)
+const days=new Date(y,m,0).getDate()
+let html=''
+for(let i=1;i<=days;i++){
+const date=y+'-'+String(m).padStart(2,'0')+'-'+String(i).padStart(2,'0')
+const has=localStorage.getItem('reef-'+date)?'has':''
+html+=`<button class="${has}" onclick="showDay('${date}',this)">${i}</button>`
+}
+$('calendar').innerHTML=html
+}
+function showDay(date,btn){
+document.querySelectorAll('.calendar button').forEach(b=>b.classList.remove('selected'))
+if(btn)btn.classList.add('selected')
+const raw=localStorage.getItem('reef-'+date)
+if(!raw){$('dayDetail').innerHTML='無資料';return}
+const d=JSON.parse(raw)
+let html=''
+;['kh','ca','mg','no3','po4','ph','no2','temp'].forEach(k=>html+=detail(k.toUpperCase(),d[k]||0))
+html+=detail('換水',`${d.waterchange||0} L`)
+html+=detail('KH添加',`${d.dosekh||0} ml`)
+html+=detail('Ca添加',`${d.doseca||0} ml`)
+html+=detail('Mg添加',`${d.dosemg||0} ml`)
+html+=detail('胺基酸',`${d.doseamino||0} ml`)
+html+=detail('備註',d.note||'-')
+$('dayDetail').innerHTML=html
+}
+function detail(a,b){return `<div class="detail"><span>${a}</span><b>${b}</b></div>`}
+function getRecords(){
+let arr=[]
+for(let i=0;i<localStorage.length;i++){
+const k=localStorage.key(i)
+if(k.startsWith('reef-'))arr.push(JSON.parse(localStorage.getItem(k)))
+}
+arr.sort((a,b)=>a.date.localeCompare(b.date))
+return arr
+}
+function saveDosing(){
+['khDaily','khPower','caDaily','caPower','mgDaily','mgPower','aminoPer100'].forEach(id=>localStorage.setItem(id,$(id).value))
+}
+function loadDosing(){
+['khDaily','khPower','caDaily','caPower','mgDaily','mgPower','aminoPer100'].forEach(id=>{const v=localStorage.getItem(id);if(v!==null)$(id).value=v})
+}
+function saveSettings(){
+localStorage.setItem('tankVolume',$('tankVolume').value)
+localStorage.setItem('tankType',$('tankType').value)
+localStorage.setItem('customType',$('customType').value)
+}
+function loadSettings(){
+const tv=localStorage.getItem('tankVolume');if(tv!==null)$('tankVolume').value=tv
+const tt=localStorage.getItem('tankType');if(tt!==null)$('tankType').value=tt
+const ct=localStorage.getItem('customType');if(ct!==null)$('customType').value=ct
+}
+function toggleCustomType(){
+$('customTypeBox').style.display=$('tankType').value==='其他'?'block':'none'
+}
+function updateAmino(){
+const tank=Number($('tankVolume').value)||0
+const per100=Number($('aminoPer100').value)||0
+$('aminoSuggest').value=((tank/100)*per100).toFixed(1)
+}
+function estimateAll(){
+const rec=getRecords().filter(r=>r.kh>0||r.ca>0||r.mg>0)
+if(rec.length<2){$('consumption').innerHTML='至少需要兩筆 KH / Ca / Mg 紀錄。';return}
+const prev=rec[rec.length-2],last=rec[rec.length-1]
+const days=daysBetween(prev.date,last.date)
+if(days<=0){$('consumption').innerHTML='兩筆紀錄日期相同，無法估算。';return}
+const tank=Number($('tankVolume').value)||220
+let html=''
+html+=estimateOne('KH','kh','dKH',prev,last,days,tank,'khDaily','khPower')
+html+=estimateOne('Ca','ca','ppm',prev,last,days,tank,'caDaily','caPower')
+html+=estimateOne('Mg','mg','ppm',prev,last,days,tank,'mgDaily','mgPower')
+$('consumption').innerHTML=html
+}
+function estimateOne(label,key,unit,prev,last,days,tank,dailyId,powerId){
+const a=Number(prev[key])||0,b=Number(last[key])||0
+if(a<=0||b<=0)return `<div class="consumption-box"><h4>${label}</h4>資料不足，暫無法估算。</div>`
+const daily=Number($(dailyId).value)||0
+const power=Number($(powerId).value)||0
+const real=power*(100/tank)
+const added=daily*days*real
+const change=b-a
+const total=added-change
+const consume=total/days
+const recommend=real>0?consume/real:0
+const diff=recommend-daily
+let advice='目前添加量接近估算消耗量。'
+if(diff>0.1)advice=`建議每日提高約 ${diff.toFixed(1)} ml，調整至 ${recommend.toFixed(1)} ml/day。`
+if(diff<-0.1)advice=`目前可能偏高，可每日降低約 ${Math.abs(diff).toFixed(1)} ml。`
+return `<div class="consumption-box"><h4>${label}</h4>
+區間：${prev.date} → ${last.date}，共 ${days} 天。<br>
+數值：${a} → ${b} ${unit}。<br>
+目前每日添加：${daily} ml/day。<br>
+估算每日消耗：<b>${consume.toFixed(3)} ${unit}/day</b><br>
+${advice}
+</div>`
+}
+loadSettings()
+loadDosing()
+updateAmino()
+renderCalendar()
+</script>
+</body>
+</html>
